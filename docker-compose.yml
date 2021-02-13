@@ -19,7 +19,8 @@ services:
       - ./acme-store:/etc/traefik/acme
     labels:
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
-    networks: todanni
+    networks:
+      - todanni
 
   postgresql:
     image: postgres
