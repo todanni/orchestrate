@@ -32,6 +32,8 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - todanni
+    ports:
+      - "127.0.01:5432:5432"
 
   vault: 
     image: vault
