@@ -32,14 +32,10 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - todanni
-    ports:
-      - "5432:5432"
 
   vault: 
     image: vault
     container_name: vault
-    ports: 
-      - "8200:8200"
     volumes:
       - ./file:/vault/file:rw
       - ./config:/vault/config:rw
@@ -48,7 +44,10 @@ services:
     networks:
       - todanni
     command: vault server -config=/vault/config/vault.json
-
+    labels: 
+      - HOST_LABEL: traefik.http.routers.vault.rule=Host(`dev-vault.todanni.com`) && PathPrefix(`/`)
+      - TLS_LABEL: traefik.http.routers.vault.tls=true
+      - CERT_LABEL: traefik.http.routers.vault.tls.certresolver=letsencrypt
 
 volumes:
   postgres-data:
