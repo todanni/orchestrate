@@ -2,7 +2,7 @@ http:
   routers:
    vault:
     entrypoints:
-      - "https"
+      - "websecure"
     rule: "Host(`vault.todanni.com`)"
     tls:
      certresolver: letsencrypt
