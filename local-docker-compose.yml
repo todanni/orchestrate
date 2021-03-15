@@ -37,8 +37,10 @@ services:
       - IPC_LOCK
     networks:
       - todanni
+    ports: 
+      - "8200:8200"
     command: vault server -config=/vault/config/vault.json
-    
+
 
 volumes:
   postgres-data:
