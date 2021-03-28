@@ -1,0 +1,15 @@
+http:
+  routers:
+   vault:
+    entrypoints:
+      - "websecure"
+    rule: "Host(`vault.todanni.com`)"
+    tls:
+     certresolver: letsencrypt
+    service: vault
+  
+  services:
+    vault:
+      loadBalancer:
+        servers:
+          - url: "http://10.106.0.2:8200"
