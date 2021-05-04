@@ -50,6 +50,7 @@ services:
       - traefik.http.routers.vault.rule=Host(`dev-vault.todanni.com`)
       - traefik.http.routers.vault.tls=true
       - traefik.http.routers.vault.tls.certresolver=letsencrypt
+      - traefik.http.middlewares.test-ipwhitelist.ipwhitelist.sourcerange=172.21.0.0/16
 
 volumes:
   postgres-data:
