@@ -29,6 +29,7 @@ jobs:
           username: root
           key: ${{ secrets.ADMIN_SSH_KEY }}
           script: |
+            cd /root/todanni/orchestrate/
             docker-compose --file dev-docker-compose.yml down
             docker-compose --file dev-docker-compose.yml up -d
       -
