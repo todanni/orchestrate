@@ -22,7 +22,8 @@ services:
       - ./acme-store:/etc/traefik/acme
       - ./traefik:/config/traefik
     networks:
-      - todanni
+      todanni:
+        ipv4_address: 172.18.0.2
 
   postgresql:
     image: postgres
@@ -33,7 +34,8 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
-      - todanni
+      todanni:
+        ipv4_address: 172.18.0.3
     ports:
       - "127.0.0.1:5432:5432"
 
@@ -43,3 +45,6 @@ volumes:
 networks:
   todanni:
     name: todanni
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
