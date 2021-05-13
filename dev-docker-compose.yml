@@ -20,7 +20,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./acme-store:/etc/traefik/acme
     networks:
-      - todanni
+      todanni:
+        ipv4_address: 172.21.0.2
 
   postgresql:
     image: postgres
@@ -31,7 +32,8 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
-      - todanni
+      todanni:
+        ipv4_address: 172.21.0.3
     ports:
       - "127.0.0.1:5432:5432"
 
@@ -44,7 +46,8 @@ services:
     cap_add:
       - IPC_LOCK
     networks:
-      - todanni
+      todanni:
+        ipv4_address: 172.21.0.4
     command: vault server -config=/vault/config/vault.json
     labels: 
       - traefik.http.routers.vault.rule=Host(`dev-vault.todanni.com`)
@@ -61,7 +64,8 @@ services:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
-      - todanni
+      todanni:
+        ipv4_address: 172.21.0.5
 
 volumes:
   postgres-data:
@@ -69,3 +73,6 @@ volumes:
 networks:
   todanni:
     name: todanni
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
