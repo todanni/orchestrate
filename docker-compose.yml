@@ -36,7 +36,7 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       todanni:
-        ipv4_address: 172.21.0.5
+        ipv4_address: 172.18.0.4
 
   postgresql:
     image: postgres
