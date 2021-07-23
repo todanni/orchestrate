@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v2.4
+    command: --api.insecure=true
+      --providers.docker
+      --providers.file.directory=/config/traefik
+      --entrypoints.web.address=:80
+      --entrypoints.websecure.address=:443
+      --entrypoints.web.http.redirections.entryPoint.to=websecure
+      --entrypoints.web.http.redirections.entryPoint.scheme=https
+      --certificatesresolvers.letsencrypt.acme.email=dannii.popova@gmail.com
+      --certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json
+      --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./acme-store:/etc/traefik/acme
+      - ./traefik:/config/traefik
+    networks:
+      todanni:
+        ipv4_address: 172.18.0.2
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    environment:
+      - RABBITMQ_DEFAULT_USER=docker
+      - RABBITMQ_DEFAULT_PASS=docker
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      todanni:
+        ipv4_address: 172.21.0.5
+
+  postgresql:
+    image: postgres
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      todanni:
+        ipv4_address: 172.18.0.3
+    ports:
+      - "127.0.0.1:5432:5432"
+
+volumes:
+  postgres-data:
+
+networks:
+  todanni:
+    name: todanni
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1

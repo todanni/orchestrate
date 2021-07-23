@@ -25,6 +25,19 @@ services:
       todanni:
         ipv4_address: 172.18.0.2
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    environment:
+      - RABBITMQ_DEFAULT_USER=docker
+      - RABBITMQ_DEFAULT_PASS=docker
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      todanni:
+        ipv4_address: 172.21.0.5
+
   postgresql:
     image: postgres
     container_name: postgres-db

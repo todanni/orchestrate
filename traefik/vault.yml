@@ -12,4 +12,4 @@ http:
     vault:
       loadBalancer:
         servers:
-          - url: "http://10.106.0.2:8200"
+          - url: "http://10.106.0.3:8200"
