@@ -4,7 +4,9 @@ services:
   traefik:
     image: traefik:v2.4
     command: --api.insecure=true
+      --accesslog=true
       --providers.docker
+      --providers.docker.exposedByDefault=false
       --providers.file.directory=/config/traefik
       --entrypoints.web.address=:80
       --entrypoints.websecure.address=:443
@@ -16,7 +18,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./acme-store:/etc/traefik/acme
