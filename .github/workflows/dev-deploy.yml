@@ -30,6 +30,7 @@ jobs:
           key: ${{ secrets.ADMIN_SSH_KEY }}
           script: |
             cd /root/todanni/orchestrate/
+            export DD_API_KEY=${{ secrets.DD_API_KEY }}
             docker-compose --file docker-compose.yml down
             docker-compose --file docker-compose.yml up -d
       -
