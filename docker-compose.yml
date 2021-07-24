@@ -13,7 +13,7 @@ services:
       --entrypoints.websecure.address=:443
       --entrypoints.web.http.redirections.entryPoint.to=websecure
       --entrypoints.web.http.redirections.entryPoint.scheme=https
-      --certificatesresolvers.letsencrypt.acme.email=dannii.popova@gmail.com
+      --certificatesresolvers.letsencrypt.acme.email=admin@todanni.com
       --certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json
       --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
     ports:
