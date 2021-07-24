@@ -41,6 +41,7 @@ services:
       - "8200:8200"
     command: vault server -config=/vault/config/vault.json
 
+
   rabbitmq:
     image: rabbitmq:3-management
     environment:
