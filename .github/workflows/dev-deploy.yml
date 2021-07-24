@@ -12,7 +12,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       -
-        name: copy repo contents via ssh password
+        name: copy repo contents via ssh
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.DEV_HOSTNAME}}
