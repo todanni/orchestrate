@@ -13,8 +13,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - todanni
-    labels:
-      com.datadoghq.ad.logs: 'traefik'
 
   postgresql:
     image: postgres
@@ -28,8 +26,6 @@ services:
       - todanni
     ports:
       - "127.0.0.1:5432:5432"
-    labels:
-      com.datadoghq.ad.logs: 'postgres'
 
   vault: 
     image: vault
@@ -44,8 +40,6 @@ services:
     ports: 
       - "8200:8200"
     command: vault server -config=/vault/config/vault.json
-    labels:
-      com.datadoghq.ad.logs: 'vault'
 
 
   rabbitmq:
@@ -61,22 +55,6 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
         - todanni
-
-  datadog:
-    image: datadog/agent:latest
-    environment:
-      - DD_API_KEY=b8f2c7f1e26f56304ff6cd8e6a57daf9
-      - DD_SITE=datadoghq.com
-      - DD_LOGS_ENABLED=true
-      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
-      - DD_CONTAINER_EXCLUDE_LOGS="name:datadog-agent"
-      - DD_SITE="datadoghq.eu"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /proc/:/host/proc/:ro
-      - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
-      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-
 
 volumes:
   postgres-data:
